@@ -112,7 +112,7 @@ export default {
 			const records = await cloudflare.dns.records.list({ zone_id: zone.id });
 
 			// Find the record by name and type
-			const record = records.result.find((r) => r.name === hostname);
+			const record = records.result.find((r) => r.name === hostname && (Address4.isValid(myip) ? r.type === "A" : Address6.isValid(myip) ? r.type === "AAAA" : false));
 
 			const baseRecord = {
 				content: address.correctForm(),
